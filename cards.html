@@ -175,7 +175,7 @@
                 card.className = 'card';
                 card.onclick = () => flipCard(i);
                 const img = document.createElement('img');
-                img.src = 'cardimg/' + i + (cardStates[i] ? '_1.png' : '_2.png');
+                img.src = 'cardimg/' + i + (cardStates[i] ? '_1.PNG' : '_2.PNG');
                 img.alt = 'Card ' + i;
                 img.onerror = function() {
                     this.style.display = 'none';
@@ -190,7 +190,7 @@
             cardStates[cardNum] = !cardStates[cardNum];
             const cards = document.querySelectorAll('.card');
             const img = cards[cardNum - 1].querySelector('img');
-            if (img) img.src = 'cardimg/' + cardNum + (cardStates[cardNum] ? '_1.png' : '_2.png');
+            if (img) img.src = 'cardimg/' + cardNum + (cardStates[cardNum] ? '_1.PNG' : '_2.PNG');
         }
 
         function resetAllCards() {
