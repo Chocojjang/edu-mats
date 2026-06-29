@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>진로 성장 플랫폼</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1a2d4f;
+      --blue: #2b5cad;
+      --sky: #4a90d9;
+      --accent: #e8a020;
+      --accent-light: #fdf3e0;
+      --text: #1c1c1e;
+      --text-muted: #6b7280;
+      --border: #e5e8ed;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--white);
+      border-bottom: 2px solid var(--navy);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 68px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--navy);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--accent);
+    }
+
+    .logo-text {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.3px;
+      white-space: nowrap;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 16px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--navy);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    .nav-link:hover,
+    .nav-item:hover > .nav-link {
+      background: #eef2fa;
+      color: var(--blue);
+    }
+
+    .nav-link .arrow {
+      width: 10px;
+      height: 10px;
+      transition: transform 0.2s;
+    }
+
+    .nav-item:hover > .nav-link .arrow {
+      transform: rotate(180deg);
+    }
+
+    /* chatbot button style */
+    .nav-link.chatbot-btn {
+      background: var(--accent);
+      color: var(--white);
+      border-radius: 20px;
+      padding: 8px 18px;
+    }
+
+    .nav-link.chatbot-btn:hover {
+      background: #d48f10;
+      color: var(--white);
+    }
+
+    /* ── DROPDOWN ── */
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 8px;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: calc(100% + 2px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 8px 28px rgba(26,45,79,0.12);
+      min-width: 168px;
+      padding: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s, transform 0.15s;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    .nav-item:hover .dropdown {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .dropdown::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      background: var(--white);
+      border-left: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      transform: translateX(-50%) rotate(45deg);
+    }
+
+    .dropdown a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.12s, color 0.12s;
+    }
+
+    .dropdown a:hover {
+      background: #eef2fa;
+      color: var(--blue);
+    }
+
+    .dropdown a .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--sky);
+      flex-shrink: 0;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 1200px;
+      margin: 60px auto 0;
+      padding: 0 32px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: #eef2fa;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--navy);
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--blue);
+    }
+
+    .hero p {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 13px 28px;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--blue); }
+
+    .btn-secondary {
+      padding: 13px 28px;
+      background: transparent;
+      color: var(--navy);
+      border: 2px solid var(--navy);
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .btn-secondary:hover { background: #eef2fa; }
+
+    .hero-visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .card-mini {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .card-mini:hover {
+      box-shadow: 0 6px 20px rgba(26,45,79,0.1);
+      transform: translateY(-2px);
+    }
+
+    .card-mini.accent-card {
+      background: var(--navy);
+      border-color: var(--navy);
+      grid-column: span 2;
+    }
+
+    .card-mini .card-icon {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .card-mini .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .card-mini.accent-card .card-title {
+      color: var(--accent);
+    }
+
+    .card-mini .card-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .card-mini.accent-card .card-desc {
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ── SECTION ── */
+    .section {
+      padding: 64px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 40px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 24px;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .feature-card:hover {
+      box-shadow: 0 8px 24px rgba(26,45,79,0.1);
+      border-color: var(--sky);
+    }
+
+    .feature-card .fc-icon {
+      font-size: 32px;
+      margin-bottom: 14px;
+    }
+
+    .feature-card .fc-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .feature-card .fc-desc {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: var(--text-muted);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 32px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 28px 32px;
+      font-size: 13px;
+      margin-top: 60px;
+    }
+
+    footer span { color: var(--accent); font-weight: 600; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; margin-top: 32px; }
+      .hero h1 { font-size: 30px; }
+      .hero-visual { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .header-inner { padding: 0 16px; }
+      .logo-text { display: none; }
+      nav { gap: 0; }
+      .nav-link { padding: 8px 10px; font-size: 13px; }
+      .hero { padding: 0 16px 48px; }
+      .section { padding: 48px 16px; }
+      .divider { margin: 0 16px; }
+    }
+    /* ── LAYOUT ── */
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .content-frame {
+      width: 100%;
+      height: calc(100vh - 68px);
+      border: none;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <span class="logo-text">진로성장플랫폼</span>
+    </a>
+
+    <nav>
+      <!-- 1. 자존감 업 -->
+      <div class="nav-item">
+        <a href="#" class="nav-link" onclick="document.getElementById('indexFrame').src='cards.html'; return false;">자존감 업</a>
+      </div>
+
+      <!-- 2. 진로실행력 업 (with dropdown) -->
+      <div class="nav-item">
+        <a href="#" class="nav-link">
+          진로실행력 업
+          <svg class="arrow" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8">
+            <polyline points="2,3 5,7 8,3"/>
+          </svg>
+        </a>
+        <div class="dropdown">
+          <a href="#" onclick="document.getElementById('indexFrame').src='coaching.html'; return false;"><span class="dot"></span>진로실행력 코칭</a>
+          <a href="#" onclick="document.getElementById('indexFrame').src='reading.html'; return false;"><span class="dot"></span>진로 독서 탐구</a>
+          <a href="#" onclick="document.getElementById('indexFrame').src='miraejob.html'; return false;"><span class="dot"></span>미래직업 탐구</a>
+        </div>
+      </div>
+
+      <!-- 3. 대입과 취업 -->
+      <div class="nav-item">
+        <a href="#" class="nav-link" onclick="document.getElementById('indexFrame').src='admission.html'; return false;">대입과 취업</a>
+      </div>
+
+      <!-- 4. 입시정보 -->
+      <div class="nav-item">
+        <a href="#" class="nav-link" onclick="document.getElementById('indexFrame').src='university_map.html'; return false;">입시정보</a>
+      </div>
+
+      <!-- 5. 챗봇 -->
+      <div class="nav-item">
+        <a href="#" class="nav-link chatbot-btn" onclick="document.getElementById('indexFrame').src='chatbot.html'; return false;">💬 챗봇</a>
+
+
+
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ── HERO ── -->
+<iframe class="content-frame" src="intro.html" id="indexFrame"></iframe>
+
+</body>
+</html>

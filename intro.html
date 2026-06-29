@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>소개 - 진로성장플랫폼</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1a2d4f;
+      --blue: #2b5cad;
+      --sky: #4a90d9;
+      --accent: #e8a020;
+      --text: #1c1c1e;
+      --text-muted: #6b7280;
+      --border: #e5e8ed;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #eef2fa 0%, #f8f9ff 60%, #fff8ed 100%);
+      padding: 20px 48px ;
+      display: block;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: #dce7f8;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--navy);
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--blue);
+    }
+
+    .hero p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 12px 26px;
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: var(--blue); }
+
+    .btn-outline {
+      padding: 12px 26px;
+      background: transparent;
+      color: var(--navy);
+      border: 2px solid var(--navy);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-outline:hover { background: #eef2fa; }
+
+    /* hero 오른쪽 카드 그리드 */
+    .hero-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .hcard {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 18px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .hcard:hover {
+      box-shadow: 0 6px 20px rgba(26,45,79,0.1);
+      transform: translateY(-2px);
+    }
+    .hcard.wide {
+      grid-column: span 2;
+      background: var(--navy);
+      border-color: var(--navy);
+    }
+    .hcard .hc-icon { font-size: 24px; margin-bottom: 8px; }
+    .hcard .hc-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .hcard.wide .hc-title { color: var(--accent); }
+    .hcard .hc-desc { font-size: 11.5px; color: var(--text-muted); line-height: 1.5; }
+    .hcard.wide .hc-desc { color: rgba(255,255,255,0.65); }
+
+    /* ── 프로그램 섹션 ── */
+    .section {
+      padding: 56px 48px;
+    }
+
+    .sec-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+
+    .sec-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 32px;
+    }
+
+    .programs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .prog-card {
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 20px;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+    .prog-card:hover {
+      box-shadow: 0 8px 24px rgba(26,45,79,0.1);
+      border-color: var(--sky);
+      transform: translateY(-2px);
+    }
+
+    .prog-card .pc-icon { font-size: 28px; margin-bottom: 12px; }
+    .prog-card .pc-title { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .prog-card .pc-desc { font-size: 13px; line-height: 1.65; color: var(--text-muted); }
+    .prog-card .pc-tag {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--blue);
+      background: #eef2fa;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    /* ── 한 줄 소개 배너 ── */
+    .banner {
+      background: var(--navy);
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .banner-text h2 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .banner-text p {
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.65);
+    }
+    .banner .btn-accent {
+      padding: 12px 26px;
+      background: var(--accent);
+      color: var(--white);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .banner .btn-accent:hover { background: #d48f10; }
+
+    /* ── 반응형 ── */
+    @media (max-width: 860px) {
+      .hero { padding: 40px 24px 36px; }
+      .hero h1 { font-size: 26px; }
+      .programs { grid-template-columns: 1fr 1fr; }
+      .section { padding: 40px 24px; }
+      .banner { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
+    }
+
+    @media (max-width: 560px) {
+      .programs { grid-template-columns: 1fr; }
+      .hero-cards { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div>
+    <span class="hero-eyebrow">진로 × 성장 × 실행</span>
+    <h1>나만의 진로를 <em>직접 설계</em>하세요</h1>
+    <p>자존감을 키우고, 진로실행력을 높이고, 대입·취업까지 한 번에 준비할 수 있는 맞춤형 진로 성장 플랫폼입니다.</p>
+  </div>
+
+</section>
+
+<!-- ── 프로그램 소개 ── -->
+<section class="section">
+  <div class="sec-label">주요 프로그램</div>
+  <div class="sec-title">무엇을 도와드릴까요?</div>
+  <div class="programs">
+
+    <a href="cards.html" class="prog-card">
+   
+      <div class="pc-title">자존감 업</div>
+      <div class="pc-desc">자기 이해와 긍정적 자아 형성을 통해 흔들리지 않는 내면의 힘을 기릅니다.</div>
+      <span class="pc-tag">자존감 카드</span>
+    </a>
+
+    <a href="coaching.html" class="prog-card">
+
+      <div class="pc-title">진로실행력 코칭</div>
+      <div class="pc-desc">막연한 꿈을 구체적인 실행 계획으로 바꾸는 맞춤 코칭 프로그램입니다.</div>
+      <span class="pc-tag">코칭</span>
+    </a>
+
+    <a href="reading.html" class="prog-card">
+
+      <div class="pc-title">진로 독서 탐구</div>
+      <div class="pc-desc">진로와 연결된 책을 읽고 생각을 정리하며 자신의 방향성을 발견합니다.</div>
+      <span class="pc-tag">독서 탐구</span>
+    </a>
+
+    <a href="miraejob.html" class="prog-card">
+   
+      <div class="pc-title">미래직업 탐구</div>
+      <div class="pc-desc">AI 시대의 유망 직업군을 탐구하고 나에게 맞는 미래 직업을 찾아봅니다.</div>
+      <span class="pc-tag">미래직업</span>
+    </a>
+
+    <a href="admission.html" class="prog-card">
+
+      <div class="pc-title">대입과 취업</div>
+      <div class="pc-desc">수시·정시 전략부터 자소서, 면접까지 입시·취업의 전 과정을 지원합니다.</div>
+      <span class="pc-tag">입시·취업</span>
+    </a>
+
+    <a href="university_map.html" class="prog-card">
+
+      <div class="pc-title">입시정보</div>
+      <div class="pc-desc">대학별 입시 정보와 전형 일정을 한눈에 확인할 수 있습니다.</div>
+      <span class="pc-tag">입시정보</span>
+    </a>
+
+
+    <a href="chatbot.html" class="prog-card">
+
+      <div class="pc-title">AI 챗봇 상담</div>
+      <div class="pc-desc">24시간 언제든지 진로 고민을 털어놓고 즉각적인 도움을 받아보세요.</div>
+      <span class="pc-tag">챗봇</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ── 배너 ── -->
+<div class="banner">
+  <div class="banner-text">
+    <h2>지금 바로 시작해보세요</h2>
+    <p>진로 고민, 혼자 하지 마세요. AI 챗봇이 24시간 함께합니다.</p>
+  </div>
+  <a href="chatbot.html" class="btn-accent"> 챗봇 상담 시작</a>
+</div>
+
+</body>
+</html>

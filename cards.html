@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자존감 향상 카드</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFE082 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .site-header {
+            background: linear-gradient(135deg, #F57F17, #E65100);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+            border-radius: 0;
+            margin: 0px 0px 20px 0px;
+        }
+        .site-header h1 {
+            font-family: 'Nanum Myeongjo', serif;
+            font-size: 2.8em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .reset-btn {
+            background: #efefef;
+            color: #333;
+            font-weight: bold;
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            box-shadow: none;
+        }
+        .reset-btn:hover {
+            background: #e0e0e0;
+            transform: translateY(-1px);
+        }
+
+        .info-btn {
+            background: #efefef;
+            color: #333;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: none;
+            transition: all 0.2s ease;
+        }
+        .info-btn:hover {
+            background: #e0e0e0;
+            transform: translateY(-1px);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .card {
+            aspect-ratio: 3/4;
+            cursor: pointer;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            background: white;
+            position: relative;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        .card img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+        }
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 2.5rem;
+            border-radius: 20px;
+            width: 90%; max-width: 500px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            animation: slideDown 0.3s ease;
+            position: relative;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to   { transform: translateY(0);     opacity: 1; }
+        }
+        .modal-title    { font-size: 1.7rem; font-weight: bold; color: #222; margin-bottom: 0.5rem; }
+        .modal-subtitle { font-size: 1.1rem; color: #666; }
+        .close-btn {
+            position: absolute; right: 1rem; top: 0.5rem;
+            color: #999; font-size: 2.5rem; font-weight: bold;
+            cursor: pointer; background: none; border: none; line-height: 1;
+        }
+        .close-btn:hover { color: #333; }
+    </style>
+</head>
+<body>
+
+    <!-- 사이트 제목 헤더 -->
+    <div class="site-header">
+        <h1>🪞 자존감 향상 카드</h1>
+    </div>
+
+    <!-- 버튼 헤더 -->
+    <div class="header">
+        <button class="reset-btn" onclick="resetAllCards()">🔄 초기화</button>
+        <button class="info-btn" onclick="showModal()">ℹ️ 안내</button>
+    </div>
+
+    <!-- 카드 그리드 -->
+    <div class="card-grid" id="cardGrid"></div>
+
+    <!-- 모달 -->
+    <div id="welcomeModal" class="modal show">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <div class="modal-title">💪 나의 빛나는 면을 발견해 보세요</div>
+            <div class="modal-subtitle">나라고 생각되는 카드를 클릭해 보세요</div>
+        </div>
+    </div>
+
+    <script>
+        let cardStates = {};
+        for (let i = 1; i <= 40; i++) cardStates[i] = true;
+
+        function createCards() {
+            const grid = document.getElementById('cardGrid');
+            grid.innerHTML = '';
+            for (let i = 1; i <= 40; i++) {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => flipCard(i);
+                const img = document.createElement('img');
+                img.src = 'cardimg/' + i + (cardStates[i] ? '_1.png' : '_2.png');
+                img.alt = 'Card ' + i;
+                img.onerror = function() {
+                    this.style.display = 'none';
+                    card.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#999;font-size:1rem;">Card ' + i + '</div>';
+                };
+                card.appendChild(img);
+                grid.appendChild(card);
+            }
+        }
+
+        function flipCard(cardNum) {
+            cardStates[cardNum] = !cardStates[cardNum];
+            const cards = document.querySelectorAll('.card');
+            const img = cards[cardNum - 1].querySelector('img');
+            if (img) img.src = 'cardimg/' + cardNum + (cardStates[cardNum] ? '_1.png' : '_2.png');
+        }
+
+        function resetAllCards() {
+            for (let i = 1; i <= 40; i++) cardStates[i] = true;
+            createCards();
+        }
+
+        function showModal()  { document.getElementById('welcomeModal').classList.add('show'); }
+        function closeModal() { document.getElementById('welcomeModal').classList.remove('show'); }
+
+        window.onclick = function(e) {
+            if (e.target === document.getElementById('welcomeModal')) closeModal();
+        }
+
+        window.onload = function() {
+            for (let i = 1; i <= 40; i++) cardStates[i] = true;
+            createCards();
+        }
+    </script>
+</body>
+</html>
